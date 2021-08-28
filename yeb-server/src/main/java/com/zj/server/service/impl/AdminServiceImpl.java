@@ -1,5 +1,6 @@
 package com.zj.server.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zj.server.config.security.JwtTokenUtil;
 import com.zj.server.pojo.Admin;
 import com.zj.server.mapper.AdminMapper;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Resource
+    private AdminMapper adminMapper;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
 
@@ -68,6 +72,17 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         tokenMap.put("token",token);
         tokenMap.put("tokenHead",tokenHead);//头部信息是给前端放到请求头里的
         return RespBean.success("登录成功",tokenMap);
+    }
+
+    /**
+     * 根据用户名获取用户
+     * @param username
+     * @return
+     */
+    @Override
+    public Admin getAdminByUserName(String username) {
+        return adminMapper.selectOne(new QueryWrapper<Admin>().eq("username",username).eq("enable",true));
+
     }
 
 }
