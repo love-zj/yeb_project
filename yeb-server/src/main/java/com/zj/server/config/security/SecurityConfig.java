@@ -50,10 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                //允许登录访问
-                .antMatchers("/login","logout")
-                .permitAll()
-                //除了允许的，其他请求都需要认证
+                //所有请求都需要认证
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -76,17 +73,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //放行静态资源
                 "/login",
                 "/logout",
+                "/ws/**",
                 "/css/**",
                 "/js/**",
-                "/index/html",
-                "favicon.ioc",
-                "/doc/html",
+                "/index.html",
+                "favicon.ico",
+                "/doc.html",
                 "/webjars/**",
                 "/swagger-resources/**",
-                "v2/api_docs/**"
+                "/v2/api-docs/**",
+                "/captcha"
         );
     }
 
+    /**
+     * 设置执行自定义认证登录
+     *
+     * @param auth
+     * @throws Exception
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());

@@ -44,6 +44,7 @@
       <artifactId>mybatis-plus-boot-starter</artifactId>
       <version>3.3.1</version>
     </dependency>
+
     <!-- swagger2 依赖 -->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -56,6 +57,7 @@
       <artifactId>swagger-bootstrap-ui</artifactId>
       <version>1.9.6</version>
     </dependency>
+
 
     <!--security 依赖-->
     <dependency>
