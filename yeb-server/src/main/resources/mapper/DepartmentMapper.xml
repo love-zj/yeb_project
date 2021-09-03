@@ -12,9 +12,42 @@
         <result column="isParent" property="isParent" />
     </resultMap>
 
+    <!-- 相当于递归查询 -->
+    <!-- SELECT * FROM t_department WHERE parent_id=-1
+                 SELECT * FROM t_department WHERE parent_id=1
+                 SELECT * FROM t_department WHERE parent_id=2 .... select ... 再次调用此方法，相当于 递归查询 -->
+    <resultMap id="DepartmentWithChildren" type="com.zj.server.pojo.Department" extends="BaseResultMap">
+        <collection property="children" ofType="com.zj.server.pojo.Department"
+                    select="com.zj.server.mapper.DepartmentMapper.getAllDepartments" column="id">
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, parentId, depPath, enabled, isParent
     </sql>
+
+    <!-- 获取所有部门 -->
+    <select id="getAllDepartments" resultMap="DepartmentWithChildren">
+         select
+             <include refid="Base_Column_List"/>
+         from
+             t_department
+         where
+             parentId=#{parentId}
+    </select>
+
+    <!-- 添加部门 -->
+    <select id="addDepartment" statementType="CALLABLE">
+        call addDep(#{name,mode=IN,jdbcType=VARCHAR},#{parentId,mode=IN,jdbcType=INTEGER},
+            #{enabled,mode=IN,jdbcType=BOOLEAN},#{result,mode=OUT,jdbcType=INTEGER},#{id,mode=OUT,jdbcType=INTEGER})
+    </select>
+    
+
+     <!-- 删除部门 -->
+    <delete id="deleteDepartment" statementType="CALLABLE">
+        call deleteDep(#{id,mode=IN,jdbcType=INTEGER},#{result,mode=OUT,jdbcType=INTEGER})
+    </delete>
+
 
 </mapper>

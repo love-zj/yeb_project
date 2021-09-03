@@ -1,4 +1,4 @@
-package com.zj.server.config.security;
+package com.zj.server.config.security.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zj.server.pojo.RespBean;
@@ -22,7 +22,7 @@ public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
-    AccessDeniedException e) throws IOException, ServletException {
+    AccessDeniedException e) throws IOException{
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();

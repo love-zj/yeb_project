@@ -16,9 +16,37 @@
         <result column="remark" property="remark" />
     </resultMap>
 
+    <resultMap id="AdminWithRole" type="com.zj.server.pojo.Admin" extends="BaseResultMap">
+        <collection property="roles" ofType="com.zj.server.pojo.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="name"/>
+            <result column="rnameZh" property="nameZh"/>
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, phone, telephone, address, enabled, username, password, userFace, remark
     </sql>
+
+    <!-- 获取所有操作员 -->
+    <select id="getAllAdmins" resultMap="AdminWithRole">
+        select
+            a.*,
+            r.id as rid,
+            r.name as rname,
+            r.nameZh as rnameZh
+        from
+            t_admin a
+            left join t_admin_role ar on a.id = ar.adminId
+            left join t_role r on ar.rid = r.id
+        where
+            a.id!=#{id}
+        <if test="null!=keywords and ''!=keywords">
+            and a.name like concat('%',#{keywords},'%')
+        </if>
+        order by
+        a.id
+    </select>
 
 </mapper>

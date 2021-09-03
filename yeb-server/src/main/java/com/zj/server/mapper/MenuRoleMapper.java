@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MenuRoleMapper extends BaseMapper<MenuRole> {
 
+    /**
+     * 更新角色菜单
+     * @param rid
+     * @param mids
+     * @return 更新的行数
+     */
+    Integer insertRecord(Integer rid, Integer[] mids);
 }

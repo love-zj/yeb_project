@@ -9,9 +9,23 @@
         <result column="nameZh" property="nameZh" />
     </resultMap>
 
+    <resultMap id="RoleWithAdmin" type="com.zj.server.pojo.Role" extends="BaseResultMap"/>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, name, nameZh
     </sql>
+
+    <!-- 根据用户id查询角色列表 -->
+    <select id="getRolesByAdminId" resultMap="RoleWithAdmin">
+        select
+            r.id,
+            r.name,
+            r.nameZh
+        from
+            t_role r
+            left join t_admin_role ar on r.id = ar.rid
+        where ar.adminId=#{adminId}
+    </select>
 
 </mapper>
