@@ -1,7 +1,7 @@
 package com.zj.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.zj.server.config.AdminUtils;
+import com.zj.server.config.admin.AdminUtils;
 import com.zj.server.config.security.component.JwtTokenUtil;
 import com.zj.server.mapper.AdminRoleMapper;
 import com.zj.server.mapper.RoleMapper;

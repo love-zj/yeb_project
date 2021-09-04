@@ -1,4 +1,4 @@
-package com.zj.server.config;
+package com.zj.server.config.admin;
 
 import com.zj.server.pojo.Admin;
 import org.springframework.security.core.context.SecurityContextHolder;

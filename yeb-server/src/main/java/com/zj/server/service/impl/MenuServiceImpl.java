@@ -1,6 +1,6 @@
 package com.zj.server.service.impl;
 
-import com.zj.server.config.AdminUtils;
+import com.zj.server.config.admin.AdminUtils;
 import com.zj.server.pojo.Menu;
 import com.zj.server.mapper.MenuMapper;
 import com.zj.server.service.IMenuService;
